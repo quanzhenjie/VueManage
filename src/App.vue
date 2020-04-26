@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <layout v-if="isLogin">
+        <layout v-if="this.topMenuActiveName != '/Login'">
             <header class="header">
                 <row>
                     <i-col span="5" offset="1">
@@ -91,22 +91,19 @@
                 <footer></footer>
             </layout>
         </layout>
-                <LoginPage v-if="!isLogin" @input="loginSuccess"></LoginPage>
+        <router-view v-if="this.topMenuActiveName == '/Login'"></router-view>
     </div>
 </template>
 <script>
     import TagsNav from './components/TagsNav/tags-nav'
-    import LoginPage from './components/LoginPage/LoginPage'
     export default {
         // name: 'main',
         components: {
-            TagsNav,
-            LoginPage
+            TagsNav
         },
         data() {
             return {
                 user : "admin",
-                isLogin : false,
                 isFullScreen : false,
                 isCollapsibled : false,
                 topMenuActiveName : "/",
@@ -129,14 +126,14 @@
                 }
                 if(!haveTab){
                     for(let j=0;j<this.$router.options.routes.length;j++){
-                        if(this.$router.options.routes[j].name == this.$router.history.current.name){
+                        if(this.$router.options.routes[j].name == this.$router.history.current.name && this.$router.history.current.path != "/Login"){
                             this.tabsNavList.push(this.$router.options.routes[j]);
                             this.saveTags();
                             break;
                         }
                     }
                 }else {
-                    this.saveTags();
+                    // this.saveTags();
                     //在标签中找到当前标签
                 }
                 // switch (this.$router.history.current.path) {
@@ -151,9 +148,8 @@
                 //         break;
                 //     //......这里添加更多的路由页面
                 // }
-            },
-            isLogin (){
-                if(this.isLogin){
+
+                if(this.topMenuActiveName != '/Login'){
                     //登录成功
                     window.onresize = function(){
                         document.getElementsByClassName('content')[0].style.height = (document.documentElement.clientHeight - 108) + 'px';
@@ -161,8 +157,6 @@
                     this.$nextTick(()=>{
                         document.getElementsByClassName('content')[0].style.height = (document.documentElement.clientHeight - 108) + 'px';
                     });
-                }else{
-                    //未登录
                 }
             }
         },
@@ -172,7 +166,7 @@
                     this.turnToPage(this.$router.options.routes[0]);
                     this.tabsNavList = [this.$router.options.routes[0]];
                     this.saveTags();
-                    this.isLogin = false;
+                    this.$router.push({name:"Login"});
                     // window.location.reload();
                 }
             },
@@ -203,10 +197,7 @@
                 }
             },
             turnToPage (route) {
-                this.$router.push({name:route.name});
-            },
-            loginSuccess (){
-                this.isLogin = true;
+                this.$router.push({name:route.name}).catch(data => {});
             },
             saveTags (){
                 sessionStorage.setItem(this.user,JSON.stringify(this.tabsNavList));
@@ -220,6 +211,9 @@
             tagNavList () {
                 return this.$router.options;
             }
+        },
+        beforeCreate : function() {
+            //this.user = "";//这里获取用户名
         },
         created : function() {
             let routeTags = JSON.parse(sessionStorage.getItem(this.user));

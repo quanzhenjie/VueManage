@@ -12,6 +12,12 @@ export default new Router({
       component: () => import(/* webpackChunkName: "Home" */ './../views/Home.vue')
     },
     {
+      path: '/Login',
+      name: 'Login',
+      title: "登录页面",
+      component: () => import(/* webpackChunkName: "about" */ './../views/Login.vue')
+    },
+    {
       path: '/logs',
       name: 'Logs',
       title: "日志",
