@@ -52,20 +52,19 @@
             </header>
             <layout>
                 <sider class="sider" width="250" collapsible v-model="isCollapsibled">
-                    <Menu active-name="" theme="dark" width="auto">
+                    <Menu :active-name="topMenuActiveName" theme="dark" width="auto">
                         <Submenu name="1">
                             <template slot="title">
-                                <Icon type="ios-navigate"></Icon>
-                                <label class="menuName">一级菜单 1</label>
+                                <Icon type="ios-paper" />
+                                <label class="menuName">表单Demo</label>
                             </template>
-                            <MenuItem name="1-1"><label class="menuName">二级菜单 1</label></MenuItem>
-                            <MenuItem name="1-2"><label class="menuName">二级菜单 2</label></MenuItem>
-                            <MenuItem name="1-3"><label class="menuName">二级菜单 3</label></MenuItem>
+                            <MenuItem name="/FormBasic" to="/FormBasic"><label class="menuName">表单基础用法</label></MenuItem>
+                            <MenuItem name="/FormAdvanced" to="/FormAdvanced"><label class="menuName">表单高级用法</label></MenuItem>
                         </Submenu>
                         <Submenu name="2">
                             <template slot="title">
                                 <Icon type="ios-keypad"></Icon>
-                                <label class="menuName">一级菜单 2</label>
+                                <label class="menuName">列表Demo</label>
                             </template>
                             <MenuItem name="2-1"><label class="menuName">二级菜单 1</label></MenuItem>
                             <MenuItem name="2-2"><label class="menuName">二级菜单 2</label></MenuItem>

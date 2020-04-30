@@ -28,6 +28,19 @@ export default new Router({
       name: 'Message',
       title: "消息",
       component: () => import(/* webpackChunkName: "about" */ './../views/Message.vue')
-    }
+    },
+      /**********************DemoPages**************************/
+    {
+      path: '/FormBasic',
+      name: 'FormBasic',
+      title: "表单基础用法",
+      component: () => import(/* webpackChunkName: "about" */ '../views/DemoPages/FormBasic.vue')
+    },
+    {
+      path: '/FormAdvanced',
+      name: 'FormAdvanced',
+      title: "表单高级用法",
+      component: () => import(/* webpackChunkName: "about" */ '../views/DemoPages/FormAdvanced.vue')
+    },
   ]
 })
